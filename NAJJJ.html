@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORION</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, Arial, sans-serif;
+            background-image: url('https://images.pexels.com/photos/1147124/pexels-photo-1147124.jpeg?cs=srgb&dl=pexels-mattycphoto-1147124.jpg&fm=jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+            color: #333;
+            transition: background-image 0.5s ease;
+        }
+		body.grill-mode {
+		position: relative;
+		}
+		body.grill-mode {
+            background-image: url('https://texturelabs.org/wp-content/uploads/Texturelabs_Atmosphere_121S.jpg');
+        }
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .theme-btn {
+            background: linear-gradient(135deg, #f7750a, #ff5500);
+            color: #fff;
+            border: 4px solid #003399;
+            padding: 20px 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .theme-btn:hover {
+            background: linear-gradient(135deg, #ff5500, #f7750a);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        body.grill-mode .theme-btn {
+            background: linear-gradient(135deg, #941b0c, #b50000);
+            border-color: #000;
+        }
+
+        body.grill-mode .theme-btn:hover {
+            background: linear-gradient(135deg, #b50000, #941b0c);
+        }
+
+        /* Header */
+        header {
+            background-color: #f7750a;
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 5px solid #003399;
+            transition: background-color 0.5s ease, border-color 0.5s ease;
+        }
+
+        body.grill-mode header {
+            background-color: #b50000;
+            border-bottom-color: #941b0c;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #003399;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.5s ease;
+        }
+
+        body.grill-mode nav {
+            background-color: #941b0c;
+        }
+
+        nav a {
+            margin: 0 20px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #f7750a;
+            border: 2px solid #fff;
+        }
+
+        body.grill-mode nav a:hover {
+            background-color: #ff6600;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* Sections */
+        .section {
+            background-color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 30px;
+            padding: 30px;
+            border: 5px solid #003399;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.5s ease;
+        }
+
+        body.grill-mode .section {
+            border-color: #ff6600;
+            background-color: rgba(255, 248, 240, 0.95);
+        }
+
+        h2 {
+            color: #f7750a;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 4px solid #f7750a;
+            padding-bottom: 10px;
+            transition: color 0.5s ease, border-color 0.5s ease;
+        }
+
+        body.grill-mode h2 {
+            color: #220901;
+            border-bottom-color: #220901;
+        }
+
+        /* O Nama sekcija */
+        .intro {
+            background-color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 30px;
+            padding: 30px;
+            border: 5px solid #003399;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.5s ease;
+        }
+
+        body.grill-mode .intro {
+            border-color: #ff6600;
+            background-color: rgba(255, 248, 240, 0.95);
+        }
+
+        .intro p {
+            line-height: 1.8;
+            font-size: 1.1em;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .company-img {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .company-img img {
+            max-width: 700px;
+            width: 100%;
+            height: auto;
+            border: 5px solid #003399;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.5s ease;
+        }
+
+        body.grill-mode .company-img img {
+            border-color: #ff6600;
+        }
+
+        /* Products Grid */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .product {
+            background-color: #f9f9f9;
+            border: 4px solid #003399;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        body.grill-mode .product {
+            border-color: #ff6600;
+            background-color: #fff5e6;
+        }
+
+        .product:hover {
+            background-color: #e6f2ff;
+            border-color: #f7750a;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.grill-mode .product:hover {
+            background-color: #ffe6cc;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 3px solid #003399;
+            margin-bottom: 15px;
+            transition: border-color 0.5s ease;
+        }
+
+        body.grill-mode .product img {
+            border-color: #ff6600;
+        }
+
+        .product h3 {
+            color: #220901;
+            font-size: 1.5em;
+            margin: 15px 0;
+            transition: color 0.5s ease;
+        }
+
+        body.grill-mode .product h3 {
+            color: #220901;
+        }
+
+        .product p {
+            margin: 8px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .price {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #003399;
+            margin-top: 10px;
+            padding: 10px;
+            background: #ffcc00;
+            border: 3px solid #003399;
+            display: inline-block;
+            transition: all 0.5s ease;
+        }
+
+        body.grill-mode .price {
+            color: #d84315;
+            background: #ff9800;
+            border-color: #d84315;
+        }
+
+        /* Hide/Show content based on mode */
+        .ribara-content {
+            display: block;
+        }
+
+        .przionica-content {
+            display: none;
+        }
+
+        body.grill-mode .ribara-content {
+            display: none;
+        }
+
+        body.grill-mode .przionica-content {
+            display: block;
+        }
+
+        /* Lokacija */
+        .location-info {
+            text-align: center;
+        }
+
+        .location-info p {
+            font-size: 1.3em;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #003399;
+            transition: color 0.5s ease;
+        }
+
+        body.grill-mode .location-info p {
+            color: #d84315;
+        }
+
+        .location-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f7750a;
+            color: #fff;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            border-top: 5px solid #003399;
+            transition: all 0.5s ease;
+        }
+
+        body.grill-mode footer {
+            background-color: #941b0c;
+            border-top-color: #621708;
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            h2 { font-size: 1.8em; }
+            nav a { margin: 0 10px; font-size: 0.9em; }
+            .company-img img { max-width: 100%; }
+            .products { grid-template-columns: 1fr; }
+            .theme-toggle { right: 10px; }
+            .theme-btn { font-size: 1em; padding: 15px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle">
+        <button class="theme-btn" onclick="toggleTheme()">
+            <span class="ribara-btn">PRZIONICA</span>
+            <span class="przionica-btn" style="display: none;">RIBARA</span>
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>ORION</h1>
+        <p class="ribara-content">Kvalitet i svežina</p>
+        <p class="przionica-content">Najbolja pržena riba</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#o-nama">O Nama</a>
+        <a href="#brasno">Brašno</a>
+        <a href="#riba">Riba</a>
+        <a href="#kontakt">Kontakt</a>
+    </nav>
+
+    <div class="container">
+        <!-- O Nama -->
+        <div class="intro" id="o-nama">
+            <h2>Šta je ORION?</h2>
+            <div class="company-img">
+                <img src="https://scontent.fbeg4-1.fna.fbcdn.net/v/t39.30808-6/477908769_946027450970381_1105866801092668994_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=GtPL-CcE9qkQ7kNvwHIrL-w&_nc_oc=AdmM-9LWm49aD58zoEbmznBNWmPRzOxN1ruvZs_BMBebfeNV5X89DbdJpqgtvviCcpg&_nc_zt=23&_nc_ht=scontent.fbeg4-1.fna&_nc_gid=bmrrklLk1LqgWwDBN5wVOQ&oh=00_AfJyJ_mSBQecILqnbb8Zo-DX4CrbJNsxJ-oxqgMZVj7J7g&oe=683903EE" alt="STR ORION Plus">
+            </div>
+            <p class="ribara-content">ORION je vaš pouzdan proizvođač organskog brašna i ribe spremljene na tradicionalan način. Posvećeni smo pružanju najboljih proizvoda našim kupcima po najboljem kvalitetu i ceni. Pregledajte naš katalog ispod da biste otkrili naš široki izbor proizvoda.</p>
+            <p class="przionica-content">ORION je vaš pouzdan proizvođač organskog brašna i ribe spremljene na tradicionalan način.Naša przionica nudi najukusniju prženu ribu u gradu! Svaki komad ribe se pažljivo priprema i prži na tradicionalan način u kvalitetnom ulju ili na žaru.Uživajte!</p>
+        </div>
+
+        <!-- Brašno -->
+        <div class="section" id="brasno">
+            <h2>Ponuda Brašna</h2>
+            <div class="products">
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGkec-_qQHvJYV-b5BjeDBSs3Luj2PYG69Sg&s" alt="Kukuruzno brašno">
+                    <h3>Kukuruzno Brašno</h3>
+                    <p>Organsko kukuruzno brašno vrhunskog kvaliteta</p>
+                    <div class="price">100 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://scontent.fbeg5-1.fna.fbcdn.net/v/t1.6435-9/51516218_474931776379506_4880629036482560_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=jFAWSqCBG7IQ7kNvwF2ANf-&_nc_oc=Adl79M2KNjH_oVpp-ArFr7i25HhyVTIy0PW5Ea6z3zRgKcS3FsCcLvCW6EjUTFqshTk&_nc_zt=23&_nc_ht=scontent.fbeg5-1.fna&_nc_gid=yNpjIyr4iBio15Gp8Yr_sQ&oh=00_AfneifKrZbuvO9nZQ8ymUrg3g-1rRvFM7SF5NGa2K3TbYA&oe=69629E4D" alt="Raž brašno">
+                    <h3>Raženo Brašno</h3>
+                    <p>Prirodno raženo brašno za tradicionalan ukus</p>
+                    <div class="price">100 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://scontent.fbeg5-1.fna.fbcdn.net/v/t1.6435-9/52008457_474931009712916_578816928412336128_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=9QqNPxFniAcQ7kNvwE5d6ni&_nc_oc=AdkLOqtq7snef-DgziM5Pj3TAC773EeGYN3MOhjwo6QO_x8u2arNXNxEUQIK090Qme4&_nc_zt=23&_nc_ht=scontent.fbeg5-1.fna&_nc_gid=nwLYKZ6SabekPjPT6yxoFA&oh=00_AfkaeSqvJRfSMUg21GG1t8Z-J2wvAaBuTOirpLcz3vTBSA&oe=69628644" alt="Pšenično brašno">
+                    <h3>Pšenično Brašno</h3>
+                    <p>Kvalitetno pšenično brašno za sve potrebe</p>
+                    <div class="price">100 RSD/kg</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Riba - RIBARA MODE -->
+        <div class="section ribara-content" id="riba">
+            <h2>Ponuda Žive Ribe</h2>
+            <div class="products">
+                <div class="product">
+                    <img src="https://www.sportskiribolov.co.rs/image/data/blog/pecaros/pastrmka-nekoliko-saveta.jpg" alt="Kalifornijska pastrmka">
+                    <h3>Kalifornijska Pastrmka</h3>
+                    <p>Sveža živa pastrmka direktno iz ribnjaka</p>
+                    <div class="price">800 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://www.lovopromet.rs/wp-content/uploads/2022/01/Oslic-800-pix.jpg" alt="Oslić">
+                    <h3>Oslić</h3>
+                    <p>Kvalitetan živ oslić</p>
+                    <div class="price">600 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://www.kapetanskirit.com/_next/static/media/saran.bb90e92b.webp" alt="Šaran">
+                    <h3>Šaran</h3>
+                    <p>Sveži šaran iz čistih voda</p>
+                    <div class="price">500 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVhOgS2FOXaHU6Prc1eSDICaxkSWZ0GxaY3w&s" alt="Skuša">
+                    <h3>Skuša</h3>
+                    <p>Sveža živa skuša</p>
+                    <div class="price">700 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://www.subotica.com/files/product/0/6/9/69/69-girice_0.jpg" alt="Girice">
+                    <h3>Girice</h3>
+                    <p>Male sveže girice</p>
+                    <div class="price">400 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://cemarket.rs/wp-content/uploads/2019/11/Som-fileti-10kg-smrznuto.png" alt="Som">
+                    <h3>Som</h3>
+                    <p>Sveži som vrhunskog kvaliteta</p>
+                    <div class="price">650 RSD/kg</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Riba - PRZIONICA MODE -->
+        <div class="section przionica-content" id="riba">
+            <h2>Ponuda Pržene Ribe </h2>
+            <div class="products">
+                <div class="product">
+                    <img src="https://i.pinimg.com/736x/44/c8/68/44c868cab4438c93c34f5207bfd9160a.jpg" alt="Pržena pastrmka">
+                    <h3>Pržena Pastrmka</h3>
+                    <p>Hrskava pastrmka pržena u kvalitetnom ulju</p>
+                    <div class="price">1000 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://i.ytimg.com/vi/x8lJjnTt_1w/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDdB1kskpBdaq4pDaZSXXQvxpjPIw" alt="Pržen oslić">
+                    <h3>Pržen Oslić</h3>
+                    <p>Zlatno-hrskav pržen oslić</p>
+                    <div class="price">800 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://www.polonist.com/wp-content/uploads/2020/11/fried-carp-1200sq-735x735.jpg" alt="Pržen šaran">
+                    <h3>Pržen Šaran</h3>
+                    <p>Tradicionalno pržen šaran</p>
+                    <div class="price">700 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://family-friends-food.com/wp-content/uploads/2016/07/2.jpg" alt="Skuša na žaru">
+                    <h3>Skuša na Žaru</h3>
+                    <p>Roštilj skuša sa dimljenim ukusom</p>
+                    <div class="price">900 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://bonapeti.rs/files/1200x800/parjensafrid5.webp" alt="Pržene girice">
+                    <h3>Pržene Girice</h3>
+                    <p>Hrskave male ribice, savršene za grickalice</p>
+                    <div class="price">600 RSD/kg</div>
+                </div>
+                <div class="product">
+                    <img src="https://thecookful.com/wp-content/uploads/2022/07/Fried-Catfish-1200x1800-1.jpg" alt="Som fileti">
+                    <h3>Fileti Soma u Ulju</h3>
+                    <p>Prženi fileti soma, bez kostiju</p>
+                    <div class="price">850 RSD/kg</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kontakt -->
+        <div class="section" id="kontakt">
+            <h2>Kontakt i Lokacija</h2>
+            <div class="location-info">
+                <div class="location-icon ribara-content"></div>
+                <div class="location-icon przionica-content"></div>
+                <p class="ribara-content">Radnja: 035 570 640</p>
+                 <p class="przionica-content">Radnja: 064 4575 517</p>
+                <p>Adresa: Bore Petrovića b.b. Zelena Pijaca,Paraćin Centralna Srbija</p>
+                <p>Radno vreme:08:00 - 15:00</p>
+                <p>Email: orionparacin@yahoo.com </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© xxxx STR ORION Plus | Sva prava zadržana</p>
+        <p class="ribara-content">Kvalitet i svežina su naš prioritet</p>
+        <p class="przionica-content">Tradicionalna priprema za savršen ukus</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const ribaraBtn = document.querySelector('.ribara-btn');
+            const przionicaBtn = document.querySelector('.przionica-btn');
+            
+            body.classList.toggle('grill-mode');
+            
+            if (body.classList.contains('grill-mode')) {
+                ribaraBtn.style.display = 'none';
+                przionicaBtn.style.display = 'block';
+            } else {
+                ribaraBtn.style.display = 'block';
+                przionicaBtn.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
